@@ -1,5 +1,79 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap');
 
+body {
+    background: linear-gradient(135deg, #0b0f1a, #111827);
+    color: white;
+    font-family: 'Poppins', sans-serif;
+    margin: 0;
+}
+
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px;
+    background: rgba(0,0,0,0.6);
+}
+
+.navbar a {
+    color: white;
+    text-decoration: none;
+    margin-left: 14px;
+}
+
+.hero {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    height: 80vh;
+    padding: 0 20px;
+}
+
+.btn {
+    padding: 10px 20px;
+    background: #7f1d1d;
+    color: white;
+    text-decoration: none;
+    border-radius: 5px;
+}
+
+.card {
+    background: rgba(17, 24, 39, 0.6);
+    backdrop-filter: blur(10px);
+    padding: 20px;
+    border-radius: 15px;
+}
+
+.explorer {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+    padding: 20px;
+}
+
+.wine-glass {
+    width: 120px;
+    height: 200px;
+    border-radius: 50% 50% 20% 20%;
+    background: radial-gradient(circle, #7f1d1d, black);
+    animation: float 3s ease-in-out infinite;
+}
+
+@keyframes float {
+    0% { transform: translateY(0px); }
+    50% { transform: translateY(-20px); }
+    100% { transform: translateY(0px); }
+}
+
+.results-wrap {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+@media (max-width: 900px) {
+  .hero { flex-direction: column; text-align: center; gap: 20px; }
+  .explorer { grid-template-columns: 1fr; }
 :root {
   --bg: #0b0f1a;
   --card: rgba(17, 24, 39, 0.6);

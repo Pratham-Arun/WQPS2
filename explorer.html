@@ -1,4 +1,52 @@
 <!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Explorer</title>
+    <link rel="stylesheet" href="css/style.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+
+<body>
+
+<nav class="navbar">
+    <h2>🍷 WineAI</h2>
+    <div>
+        <a href="index.html">Home</a>
+        <a href="explorer.html">Explorer</a>
+        <a href="results.html">Results</a>
+    </div>
+</nav>
+
+<div class="explorer">
+
+    <div class="card">
+        <h3>Wine Parameters</h3>
+
+        <label>Alcohol</label>
+        <input type="range" id="alcohol" min="8" max="15" step="0.1" value="10" oninput="update()">
+
+        <label>Volatile Acidity</label>
+        <input type="range" id="va" min="0.1" max="2" step="0.01" value="0.5" oninput="update()">
+
+        <label>Sulphates</label>
+        <input type="range" id="sulphates" min="0.2" max="2" step="0.01" value="0.6" oninput="update()">
+    </div>
+
+    <div class="card">
+        <canvas id="chart"></canvas>
+    </div>
+
+    <div class="card">
+        <h3>Result</h3>
+        <div id="result"></div>
+    </div>
+
+</div>
+
+<script src="js/script.js"></script>
+
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
