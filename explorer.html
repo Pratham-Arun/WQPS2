@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="css/style.css">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
+<body>
 
 <body>
 
@@ -14,12 +15,20 @@
     <h2>🍷 WineAI</h2>
     <div>
         <a href="index.html">Home</a>
+        <a href="dataset.html">Dataset</a>
+        <a href="explorer.html">Explorer</a>
+        <a href="results.html">Results</a>
+        <a href="notebook.html">Notebook</a>
         <a href="explorer.html">Explorer</a>
         <a href="results.html">Results</a>
     </div>
 </nav>
 
 <div class="explorer">
+    <div class="card">
+        <h3>Wine Parameters</h3>
+        <label>Alcohol</label>
+        <input type="range" id="alcohol" min="8" max="15" step="0.1" value="10.5" oninput="update()">
 
     <div class="card">
         <h3>Wine Parameters</h3>
@@ -32,6 +41,19 @@
 
         <label>Sulphates</label>
         <input type="range" id="sulphates" min="0.2" max="2" step="0.01" value="0.6" oninput="update()">
+
+        <label>Chlorides</label>
+        <input type="range" id="chlorides" min="0.01" max="0.2" step="0.01" value="0.05" oninput="update()">
+
+        <label>Citric Acid</label>
+        <input type="range" id="citric" min="0" max="1" step="0.01" value="0.3" oninput="update()">
+
+        <label>pH</label>
+        <input type="range" id="ph" min="2.8" max="4.2" step="0.01" value="3.3" oninput="update()">
+    </div>
+
+    <div class="card">
+        <h3>Feature Impact</h3>
     </div>
 
     <div class="card">
@@ -42,6 +64,9 @@
         <h3>Result</h3>
         <div id="result"></div>
     </div>
+</div>
+
+<script src="js/script.js"></script>
 
 </div>
 
