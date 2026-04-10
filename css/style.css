@@ -1,0 +1,95 @@
+:root {
+  --bg: #0b0f1a;
+  --surface: #111827;
+  --text: #f9fafb;
+  --muted: #d1d5db;
+  --accent: #f87171;
+  --button: #7f1d1d;
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: Arial, Helvetica, sans-serif;
+  line-height: 1.5;
+}
+
+h1, h2 {
+  color: var(--accent);
+}
+
+.site-header {
+  padding: 1.5rem;
+  border-bottom: 1px solid #374151;
+}
+
+nav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  margin-top: 1rem;
+}
+
+nav a {
+  color: var(--text);
+  text-decoration: none;
+  padding: 0.45rem 0.75rem;
+  border: 1px solid #374151;
+  border-radius: 0.5rem;
+}
+
+nav a.cta {
+  border-color: #ef4444;
+}
+
+.container {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 1.5rem;
+}
+
+.card {
+  background: var(--surface);
+  border: 1px solid #374151;
+  border-radius: 0.75rem;
+  padding: 1rem 1.25rem;
+  margin-bottom: 1rem;
+}
+
+label {
+  display: block;
+  margin-top: 0.75rem;
+  color: var(--muted);
+}
+
+input[type="range"] {
+  width: 100%;
+}
+
+button {
+  margin-top: 1rem;
+  background: var(--button);
+  color: white;
+  padding: 10px 14px;
+  border-radius: 5px;
+  border: none;
+  cursor: pointer;
+}
+
+.result, .insights {
+  margin-top: 1rem;
+}
+
+.bars > div {
+  margin: 0.75rem 0;
+}
+
+.bar {
+  height: 12px;
+  background: linear-gradient(90deg, #ef4444, #22c55e);
+  width: var(--w);
+  border-radius: 999px;
+}
