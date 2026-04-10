@@ -3,6 +3,43 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Results | WineAI</title>
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+  <nav class="navbar">
+    <h2>🍷 WineAI</h2>
+    <ul>
+      <li><a href="index.html">Home</a></li>
+      <li><a href="about.html">About</a></li>
+      <li><a href="dataset.html">Dataset</a></li>
+      <li><a href="results.html" class="active">Results</a></li>
+      <li><a href="explorer.html">Explorer</a></li>
+      <li><a href="notebook.html">Notebook</a></li>
+    </ul>
+  </nav>
+
+  <main class="container grid-2">
+    <section class="card">
+      <h2>Feature Importance</h2>
+      <canvas id="resultsChart" height="180"></canvas>
+    </section>
+    <section class="card">
+      <h2>Correlation Heatmap (Conceptual)</h2>
+      <div class="heatmap-grid">
+        <div class="h1">1.00</div><div class="h2">-0.42</div><div class="h3">0.31</div>
+        <div class="h2">-0.42</div><div class="h1">1.00</div><div class="h2">-0.25</div>
+        <div class="h3">0.31</div><div class="h2">-0.25</div><div class="h1">1.00</div>
+      </div>
+    </section>
+    <section class="card">
+      <h2>Model Accuracy</h2>
+      <p>Logistic Regression: <strong>74%</strong></p>
+      <p>XGBoost: <strong>82%</strong></p>
+    </section>
+  </main>
+
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <title>Results | Wine Quality Intelligence Platform</title>
   <link rel="stylesheet" href="css/style.css" />
 </head>
