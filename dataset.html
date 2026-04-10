@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Dataset | WineAI</title>
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+  <nav class="navbar">
+    <h2>🍷 WineAI</h2>
+    <ul>
+      <li><a href="index.html">Home</a></li>
+      <li><a href="about.html">About</a></li>
+      <li><a href="dataset.html" class="active">Dataset</a></li>
+      <li><a href="results.html">Results</a></li>
+      <li><a href="explorer.html">Explorer</a></li>
+      <li><a href="notebook.html">Notebook</a></li>
+    </ul>
+  </nav>
+
+  <main class="container">
+    <section class="card">
+      <h2>Dataset Preview</h2>
+      <table>
+        <tr><th>Alcohol</th><th>pH</th><th>Quality</th></tr>
+        <tr><td>10.5</td><td>3.2</td><td>6</td></tr>
+        <tr><td>12.1</td><td>3.1</td><td>7</td></tr>
+      </table>
+      <p class="small">Data source sample packaged in <code>data/winequality.csv</code>.</p>
+    </section>
+    <section class="grid-2">
+      <article class="card"><h3>Alcohol</h3><p>Generally improves quality when balanced.</p></article>
+      <article class="card"><h3>Volatile acidity</h3><p>Higher values can reduce quality and freshness.</p></article>
+      <article class="card"><h3>Sulphates</h3><p>Supports preservation and microbial stability.</p></article>
+      <article class="card"><h3>Feature scope</h3><p>Includes acidity, sugar, chlorides, sulfur compounds, density, pH, alcohol, type, and quality label.</p></article>
+    </section>
+  </main>
+
+  <script src="js/script.js"></script>
+</body>
+</html>
