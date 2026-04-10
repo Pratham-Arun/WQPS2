@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Dataset | Wine Quality Intelligence Platform</title>
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+  <header class="site-header">
+    <h1>Dataset Overview</h1>
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="about.html">About</a>
+      <a href="methodology.html">Methodology</a>
+      <a href="dataset.html">Dataset</a>
+      <a href="results.html">Results</a>
+      <a href="notebook.html">Notebook</a>
+      <a href="explorer.html" class="cta">Launch Explorer</a>
+    </nav>
+  </header>
+
+  <main class="container">
+    <section class="card fade-in">
+      <h2>Dataset Preview</h2>
+      <table>
+        <tr><th>Alcohol</th><th>pH</th><th>Quality</th></tr>
+        <tr><td>10.5</td><td>3.2</td><td>6</td></tr>
+        <tr><td>12.1</td><td>3.1</td><td>7</td></tr>
+      </table>
+      <p class="small">Full CSV is available at <code>data/winequality.csv</code>.</p>
+    </section>
+
+    <section class="card fade-in">
+      <h2>Key Effects</h2>
+      <ul>
+        <li>Alcohol → often improves quality when balanced.</li>
+        <li>Volatile acidity → higher levels usually reduce quality.</li>
+        <li>Sulphates → support preservation and stability.</li>
+      </ul>
+    </section>
+
+    <section class="card fade-in">
+      <h2>Features Included</h2>
+      <p>
+        fixed acidity, volatile acidity, citric acid, residual sugar, chlorides, free sulfur dioxide,
+        total sulfur dioxide, density, pH, sulphates, alcohol, type, quality.
+      </p>
+    </section>
+  </main>
+
+  <script src="js/script.js"></script>
+</body>
+</html>
