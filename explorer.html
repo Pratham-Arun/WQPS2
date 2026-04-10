@@ -15,38 +15,22 @@
       <a href="methodology.html">Methodology</a>
       <a href="dataset.html">Dataset</a>
       <a href="results.html">Results</a>
-      <a href="notebook.html">Notebook</a>
       <a href="explorer.html" class="cta">Launch Explorer</a>
     </nav>
   </header>
 
   <main class="container">
-    <section class="card fade-in">
-      <h2>Interactive Simulation</h2>
+    <section class="card">
+      <h2>Wine Quality Explorer</h2>
 
-      <label for="fixed_acidity">Fixed Acidity: <span id="fixed_acidityValue">7.4</span></label>
-      <input type="range" id="fixed_acidity" min="4" max="16" step="0.1" value="7.4" />
+      <label for="alcohol">Alcohol: <span id="alcoholValue">11.0</span></label>
+      <input type="range" id="alcohol" min="8" max="15" step="0.1" value="11.0" />
 
-      <label for="va">Volatile Acidity: <span id="vaValue">0.70</span></label>
-      <input type="range" id="va" min="0.1" max="2" step="0.01" value="0.70" />
-
-      <label for="citric">Citric Acid: <span id="citricValue">0.30</span></label>
-      <input type="range" id="citric" min="0" max="1" step="0.01" value="0.30" />
-
-      <label for="sugar">Residual Sugar: <span id="sugarValue">5.0</span></label>
-      <input type="range" id="sugar" min="0" max="15" step="0.1" value="5.0" />
-
-      <label for="chlorides">Chlorides: <span id="chloridesValue">0.08</span></label>
-      <input type="range" id="chlorides" min="0.01" max="0.2" step="0.01" value="0.08" />
-
-      <label for="ph">pH: <span id="phValue">3.30</span></label>
-      <input type="range" id="ph" min="2.5" max="4.5" step="0.01" value="3.30" />
+      <label for="va">Volatile Acidity: <span id="vaValue">0.80</span></label>
+      <input type="range" id="va" min="0.1" max="2" step="0.01" value="0.80" />
 
       <label for="sulphates">Sulphates: <span id="sulphatesValue">0.60</span></label>
       <input type="range" id="sulphates" min="0.2" max="2" step="0.01" value="0.60" />
-
-      <label for="alcohol">Alcohol: <span id="alcoholValue">10.5</span></label>
-      <input type="range" id="alcohol" min="8" max="15" step="0.1" value="10.5" />
 
       <button onclick="predictWine()">Analyze</button>
 

@@ -15,40 +15,33 @@
       <a href="methodology.html">Methodology</a>
       <a href="dataset.html">Dataset</a>
       <a href="results.html">Results</a>
-      <a href="notebook.html">Notebook</a>
       <a href="explorer.html" class="cta">Launch Explorer</a>
     </nav>
   </header>
 
   <main class="container">
-    <section class="card fade-in">
-      <h2>Data Preprocessing</h2>
+    <section class="card">
+      <h2>Dataset Overview</h2>
       <p>
-        Data cleaning handles missing values and outliers, while scaling aligns feature ranges
-        for robust model training and fair feature contribution.
+        Typical wine quality datasets contain physicochemical measurements and a quality score.
+        These measurements are used as model features to estimate likely quality outcomes.
       </p>
     </section>
 
-    <section class="card fade-in">
-      <h2>Feature Selection</h2>
+    <section class="card">
+      <h2>Feature Engineering & Model Concepts</h2>
       <p>
-        Core features such as alcohol, volatile acidity, sulphates, and pH are prioritized
-        due to strong explanatory power in wine quality datasets.
+        Features such as alcohol, volatile acidity, sulphates, and pH are normalized and analyzed.
+        In production systems, models like logistic regression, random forests, or gradient boosting
+        may be applied to capture complex relationships.
       </p>
     </section>
 
-    <section class="card fade-in">
-      <h2>Models (Conceptual)</h2>
-      <ul>
-        <li>Logistic Regression for interpretable baseline classification.</li>
-        <li>XGBoost for high-performance non-linear learning.</li>
-      </ul>
-    </section>
-
-    <section class="card fade-in">
+    <section class="card">
       <h2>Evaluation Metrics</h2>
       <p>
-        Performance is assessed with accuracy, precision, recall, F1-score, and confusion matrix analysis.
+        Model performance is commonly evaluated using accuracy, precision, recall, F1-score,
+        and confusion matrices. For regression-style quality estimation, MAE and RMSE can also be used.
       </p>
     </section>
   </main>
