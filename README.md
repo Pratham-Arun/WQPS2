@@ -66,5 +66,3 @@ This platform is based on the **UCI Machine Learning Repository: Wine Quality Da
 
 ## 📄 License
 Distributed under the MIT License. See `LICENSE` for more information.
-
----
