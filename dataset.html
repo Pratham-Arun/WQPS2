@@ -1,115 +1,65 @@
 <!DOCTYPE html>
-<html>
-<head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Dataset | WineAI</title>
-    <link rel="stylesheet" href="css/style.css">
-</head>
-<body>
-<nav class="navbar">
-    <h2>🍷 WineAI</h2>
-    <div>
-        <a href="index.html">Home</a>
-        <a href="dataset.html">Dataset</a>
-        <a href="explorer.html">Explorer</a>
-        <a href="results.html">Results</a>
-        <a href="notebook.html">Notebook</a>
-    </div>
-</nav>
-
-<div class="content-wrap">
-  <div class="card">
-    <h3>Dataset Overview</h3>
-    <p>
-    This dataset includes physicochemical properties of red and white wines such as acidity,
-    alcohol, sulphates, and pH. The goal is to predict wine quality on a scale of 0 to 10.
-    </p>
-    <p>Source context: Portuguese Vinho Verde wines with ~11-12 input features plus quality score.</p>
-  </div>
-</div>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Dataset | WineAI</title>
+  <title>Dataset | Wine Quality Prediction System</title>
   <link rel="stylesheet" href="css/style.css" />
 </head>
 <body>
   <nav class="navbar">
-    <h2>🍷 WineAI</h2>
+    <a href="index.html" class="brand">🍷 Wine Quality <span>Prediction System</span></a>
     <ul>
       <li><a href="index.html">Home</a></li>
       <li><a href="about.html">About</a></li>
+      <li><a href="methodology.html">Methodology</a></li>
       <li><a href="dataset.html" class="active">Dataset</a></li>
       <li><a href="results.html">Results</a></li>
-      <li><a href="explorer.html">Explorer</a></li>
       <li><a href="notebook.html">Notebook</a></li>
+      <li><a href="explorer.html">Explorer</a></li>
     </ul>
   </nav>
-
   <main class="container">
-    <section class="card">
-      <h2>Dataset Preview</h2>
+    <section class="card fade-in">
+      <h1>Wine Quality Dataset</h1>
+      <p class="mt-2">The UCI "Wine Quality" dataset contains 6,497 samples (red + white wine) with 11 chemical input variables and 1 output variable (quality score 0–10).</p>
+    </section>
+    <section class="card mt-3 fade-in">
+      <h3>All 11 Chemical Attributes</h3>
       <table>
-        <tr><th>Alcohol</th><th>pH</th><th>Quality</th></tr>
-        <tr><td>10.5</td><td>3.2</td><td>6</td></tr>
-        <tr><td>12.1</td><td>3.1</td><td>7</td></tr>
+        <thead><tr><th>Attribute</th><th>Unit</th><th>Description</th><th>Impact on Quality</th></tr></thead>
+        <tbody>
+          <tr><td>Fixed Acidity</td><td>g/dm³</td><td>Non-volatile acids; contribute to tartness</td><td>Moderate</td></tr>
+          <tr><td>Volatile Acidity</td><td>g/dm³</td><td>Acetic acid; high levels → vinegar taste</td><td><strong style="color:#f87171">Strong −</strong></td></tr>
+          <tr><td>Citric Acid</td><td>g/dm³</td><td>Adds freshness and flavor complexity</td><td>Mild +</td></tr>
+          <tr><td>Residual Sugar</td><td>g/dm³</td><td>Sugar remaining after fermentation</td><td>Low</td></tr>
+          <tr><td>Chlorides</td><td>g/dm³</td><td>Salt concentration in wine</td><td>Low −</td></tr>
+          <tr><td>Free Sulfur Dioxide</td><td>mg/dm³</td><td>Prevents microbial growth and oxidation</td><td>Moderate</td></tr>
+          <tr><td>Total Sulfur Dioxide</td><td>mg/dm³</td><td>Free + bound forms of SO₂</td><td>Moderate −</td></tr>
+          <tr><td>Density</td><td>g/cm³</td><td>Depends on alcohol and sugar content</td><td><strong style="color:#f87171">Strong −</strong></td></tr>
+          <tr><td>pH</td><td>—</td><td>Acidity level; lower = more acidic</td><td>Moderate −</td></tr>
+          <tr><td>Sulphates</td><td>g/dm³</td><td>Antimicrobial and antioxidant additive</td><td><strong style="color:#4ade80">Moderate +</strong></td></tr>
+          <tr><td>Alcohol</td><td>% vol</td><td>Ethanol percentage from fermentation</td><td><strong style="color:#4ade80">Strongest +</strong></td></tr>
+        </tbody>
       </table>
-      <p class="small">Data source sample packaged in <code>data/winequality.csv</code>.</p>
     </section>
-    <section class="grid-2">
-      <article class="card"><h3>Alcohol</h3><p>Generally improves quality when balanced.</p></article>
-      <article class="card"><h3>Volatile acidity</h3><p>Higher values can reduce quality and freshness.</p></article>
-      <article class="card"><h3>Sulphates</h3><p>Supports preservation and microbial stability.</p></article>
-      <article class="card"><h3>Feature scope</h3><p>Includes acidity, sugar, chlorides, sulfur compounds, density, pH, alcohol, type, and quality label.</p></article>
-  <title>Dataset | Wine Quality Intelligence Platform</title>
-  <link rel="stylesheet" href="css/style.css" />
-</head>
-<body>
-  <header class="site-header">
-    <h1>Dataset Features</h1>
-    <nav>
-      <a href="index.html">Home</a>
-      <a href="about.html">About</a>
-      <a href="methodology.html">Methodology</a>
-      <a href="dataset.html">Dataset</a>
-      <a href="results.html">Results</a>
-      <a href="explorer.html" class="cta">Launch Explorer</a>
-    </nav>
-  </header>
-
-  <main class="container">
-    <section class="card">
-      <h2>Alcohol</h2>
-      <p>Higher alcohol often correlates with stronger body and potentially higher quality scores.</p>
-    </section>
-
-    <section class="card">
-      <h2>Acidity</h2>
-      <p>
-        Volatile acidity, when too high, can create undesirable aromas and lower perceived quality.
-        Balanced acidity supports freshness and structure.
-      </p>
-    </section>
-
-    <section class="card">
-      <h2>Sulphates</h2>
-      <p>
-        Sulphates can improve microbial stability and influence mouthfeel. Moderate levels are usually
-        associated with better preservation and balance.
-      </p>
-    </section>
-
-    <section class="card">
-      <h2>pH</h2>
-      <p>
-        pH indicates acidity strength and influences color stability, flavor balance, and microbial risk.
-        Lower pH generally means brighter acidity and more stability.
-      </p>
+    <section class="card mt-3 fade-in">
+      <h3>Sample Records</h3>
+      <table>
+        <thead><tr><th>Alcohol</th><th>Vol. Acidity</th><th>Citric</th><th>Sugar</th><th>Chlorides</th><th>pH</th><th>Sulphates</th><th>Quality</th></tr></thead>
+        <tbody>
+          <tr><td>9.4</td><td>0.70</td><td>0.00</td><td>1.9</td><td>0.076</td><td>3.51</td><td>0.56</td><td>5</td></tr>
+          <tr><td>9.8</td><td>0.88</td><td>0.00</td><td>2.6</td><td>0.098</td><td>3.20</td><td>0.68</td><td>5</td></tr>
+          <tr><td>12.2</td><td>0.28</td><td>0.56</td><td>1.9</td><td>0.075</td><td>3.16</td><td>0.58</td><td>7</td></tr>
+          <tr><td>11.8</td><td>0.22</td><td>0.33</td><td>2.1</td><td>0.036</td><td>3.14</td><td>0.62</td><td>7</td></tr>
+        </tbody>
+      </table>
+      <div class="mt-3">
+        <a href="data/winequality.csv" class="btn" download>⬇ Download Raw CSV</a>
+      </div>
     </section>
   </main>
-
+  <footer class="footer"><p>Wine Quality Prediction System · Dataset</p></footer>
   <script src="js/script.js"></script>
 </body>
 </html>

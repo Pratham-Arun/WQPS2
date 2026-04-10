@@ -1,162 +1,108 @@
 <!DOCTYPE html>
-<html>
-<head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Explorer</title>
-    <link rel="stylesheet" href="css/style.css">
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-</head>
-<body>
-
-<body>
-
-<nav class="navbar">
-    <h2>🍷 WineAI</h2>
-    <div>
-        <a href="index.html">Home</a>
-        <a href="dataset.html">Dataset</a>
-        <a href="explorer.html">Explorer</a>
-        <a href="results.html">Results</a>
-        <a href="notebook.html">Notebook</a>
-        <a href="explorer.html">Explorer</a>
-        <a href="results.html">Results</a>
-    </div>
-</nav>
-
-<div class="explorer">
-    <div class="card">
-        <h3>Wine Parameters</h3>
-        <label>Alcohol</label>
-        <input type="range" id="alcohol" min="8" max="15" step="0.1" value="10.5" oninput="update()">
-
-    <div class="card">
-        <h3>Wine Parameters</h3>
-
-        <label>Alcohol</label>
-        <input type="range" id="alcohol" min="8" max="15" step="0.1" value="10" oninput="update()">
-
-        <label>Volatile Acidity</label>
-        <input type="range" id="va" min="0.1" max="2" step="0.01" value="0.5" oninput="update()">
-
-        <label>Sulphates</label>
-        <input type="range" id="sulphates" min="0.2" max="2" step="0.01" value="0.6" oninput="update()">
-
-        <label>Chlorides</label>
-        <input type="range" id="chlorides" min="0.01" max="0.2" step="0.01" value="0.05" oninput="update()">
-
-        <label>Citric Acid</label>
-        <input type="range" id="citric" min="0" max="1" step="0.01" value="0.3" oninput="update()">
-
-        <label>pH</label>
-        <input type="range" id="ph" min="2.8" max="4.2" step="0.01" value="3.3" oninput="update()">
-    </div>
-
-    <div class="card">
-        <h3>Feature Impact</h3>
-    </div>
-
-    <div class="card">
-        <canvas id="chart"></canvas>
-    </div>
-
-    <div class="card">
-        <h3>Result</h3>
-        <div id="result"></div>
-    </div>
-</div>
-
-<script src="js/script.js"></script>
-
-</div>
-
-<script src="js/script.js"></script>
-
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Explorer | WineAI</title>
+  <meta name="description" content="Interactive Wine Quality Explorer — adjust all 11 chemical parameters and get real-time quality predictions." />
+  <title>Explorer | Wine Quality Prediction System</title>
   <link rel="stylesheet" href="css/style.css" />
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
+
   <nav class="navbar">
-    <h2>🍷 WineAI</h2>
+    <a href="index.html" class="brand">🍷 Wine Quality <span>Prediction System</span></a>
     <ul>
       <li><a href="index.html">Home</a></li>
       <li><a href="about.html">About</a></li>
+      <li><a href="methodology.html">Methodology</a></li>
       <li><a href="dataset.html">Dataset</a></li>
       <li><a href="results.html">Results</a></li>
-      <li><a href="explorer.html" class="active">Explorer</a></li>
       <li><a href="notebook.html">Notebook</a></li>
+      <li><a href="explorer.html" class="active">Explorer</a></li>
     </ul>
   </nav>
 
   <main class="container">
-    <section class="explorer">
-      <div class="card inputs">
-        <h3>Parameters</h3>
-        <label>Fixed Acidity <span id="fixed_acidityValue">7.4</span></label><input type="range" id="fixed_acidity" min="4" max="16" step="0.1" value="7.4">
-        <label>Volatile Acidity <span id="vaValue">0.70</span></label><input type="range" id="va" min="0.1" max="2" step="0.01" value="0.70">
-        <label>Citric Acid <span id="citricValue">0.30</span></label><input type="range" id="citric" min="0" max="1" step="0.01" value="0.30">
-        <label>Residual Sugar <span id="sugarValue">5.0</span></label><input type="range" id="sugar" min="0" max="15" step="0.1" value="5.0">
-        <label>Chlorides <span id="chloridesValue">0.08</span></label><input type="range" id="chlorides" min="0.01" max="0.2" step="0.01" value="0.08">
-        <label>pH <span id="phValue">3.30</span></label><input type="range" id="ph" min="2.5" max="4.5" step="0.01" value="3.30">
-        <label>Sulphates <span id="sulphatesValue">0.60</span></label><input type="range" id="sulphates" min="0.2" max="2" step="0.01" value="0.60">
-        <label>Alcohol <span id="alcoholValue">10.5</span></label><input type="range" id="alcohol" min="8" max="15" step="0.1" value="10.5">
-        <button onclick="predictWine()">Analyze</button>
-      </div>
-
-      <div class="card visualization">
-        <h3>Live Profile</h3>
-        <canvas id="chart"></canvas>
-      </div>
-
-      <div class="card result">
-        <h3>Result</h3>
-        <div id="loader"></div>
-        <div id="output"></div>
-        <div id="insights"></div>
-      </div>
+    <section class="card fade-in" style="margin-bottom: 2rem;">
+      <h1>🍷 Wine Quality Explorer</h1>
+      <p class="mt-1">Adjust all 11 chemical parameters below and click <strong>Analyze</strong> to simulate a quality prediction using research-based scoring logic.</p>
     </section>
+
+    <div class="explorer-grid fade-in">
+      <!-- Left: All Inputs -->
+      <div class="card">
+        <h3>Chemical Parameters</h3>
+
+        <label style="margin-top: 0.5rem;">Wine Type</label>
+        <div style="display: flex; gap: 0.75rem; margin-top: 0.4rem;">
+          <button type="button" id="typeRed" class="type-btn active" onclick="setWineType('red')" style="flex:1; padding: 0.5rem;">🍷 Red</button>
+          <button type="button" id="typeWhite" class="type-btn" onclick="setWineType('white')" style="flex:1; padding: 0.5rem;">🥂 White</button>
+        </div>
+        <input type="hidden" id="wineType" value="red">
+
+        <label>Fixed Acidity (g/dm³) <span id="fixedAcidityVal">7.4</span></label>
+        <input type="range" id="fixedAcidity" min="4" max="16" step="0.1" value="7.4">
+
+        <label>Volatile Acidity (g/dm³) <span id="vaVal">0.50</span></label>
+        <input type="range" id="va" min="0.1" max="1.6" step="0.01" value="0.50">
+
+        <label>Citric Acid (g/dm³) <span id="citricVal">0.30</span></label>
+        <input type="range" id="citric" min="0" max="1" step="0.01" value="0.30">
+
+        <label>Residual Sugar (g/dm³) <span id="sugarVal">2.5</span></label>
+        <input type="range" id="sugar" min="0.6" max="15" step="0.1" value="2.5">
+
+        <label>Chlorides (g/dm³) <span id="chloridesVal">0.08</span></label>
+        <input type="range" id="chlorides" min="0.01" max="0.2" step="0.001" value="0.08">
+
+        <label>Free Sulfur Dioxide (mg/dm³) <span id="freeSO2Val">15</span></label>
+        <input type="range" id="freeSO2" min="1" max="72" step="1" value="15">
+
+        <label>Total Sulfur Dioxide (mg/dm³) <span id="totalSO2Val">46</span></label>
+        <input type="range" id="totalSO2" min="6" max="289" step="1" value="46">
+
+        <label>Density (g/cm³) <span id="densityVal">0.9960</span></label>
+        <input type="range" id="density" min="0.990" max="1.004" step="0.0001" value="0.9960">
+
+        <label>pH (pH scale) <span id="phVal">3.30</span></label>
+        <input type="range" id="ph" min="2.7" max="4.1" step="0.01" value="3.30">
+
+        <label>Sulphates (g/dm³) <span id="sulphatesVal">0.65</span></label>
+        <input type="range" id="sulphates" min="0.2" max="2" step="0.01" value="0.65">
+
+        <label>Alcohol (% vol) <span id="alcoholVal">10.5</span></label>
+        <input type="range" id="alcohol" min="8" max="15" step="0.1" value="10.5">
+
+        <div style="display: flex; gap: 0.75rem; margin-top: 1.5rem;">
+          <button onclick="predictWine()" style="flex: 2;">⚗️ Analyze</button>
+          <button onclick="resetToGoodQuality()" style="flex: 1; background: linear-gradient(135deg, #065f46, #047857); font-size: 0.85rem;">🏆 Reset to Good</button>
+        </div>
+      </div>
+
+      <!-- Right: Chart + Result -->
+      <div>
+        <div class="card" style="margin-bottom: 1.5rem;">
+          <h3>Live Chemical Profile</h3>
+          <div class="chart-wrap">
+            <canvas id="explorerChart"></canvas>
+          </div>
+        </div>
+
+        <div class="card">
+          <h3>Prediction Result</h3>
+          <div id="result">
+            <p style="color: var(--muted);">Adjust parameters and click <strong>Analyze</strong> to see results.</p>
+          </div>
+          <div id="insights"></div>
+        </div>
+      </div>
+    </div>
   </main>
 
-  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-  <title>Explorer | Wine Quality Intelligence Platform</title>
-  <link rel="stylesheet" href="css/style.css" />
-</head>
-<body>
-  <header class="site-header">
-    <h1>Wine Quality Explorer</h1>
-    <nav>
-      <a href="index.html">Home</a>
-      <a href="about.html">About</a>
-      <a href="methodology.html">Methodology</a>
-      <a href="dataset.html">Dataset</a>
-      <a href="results.html">Results</a>
-      <a href="explorer.html" class="cta">Launch Explorer</a>
-    </nav>
-  </header>
-
-  <main class="container">
-    <section class="card">
-      <h2>Wine Quality Explorer</h2>
-
-      <label for="alcohol">Alcohol: <span id="alcoholValue">11.0</span></label>
-      <input type="range" id="alcohol" min="8" max="15" step="0.1" value="11.0" />
-
-      <label for="va">Volatile Acidity: <span id="vaValue">0.80</span></label>
-      <input type="range" id="va" min="0.1" max="2" step="0.01" value="0.80" />
-
-      <label for="sulphates">Sulphates: <span id="sulphatesValue">0.60</span></label>
-      <input type="range" id="sulphates" min="0.2" max="2" step="0.01" value="0.60" />
-
-      <button onclick="predictWine()">Analyze</button>
-
-      <div id="result" class="result"></div>
-      <div id="insights" class="insights"></div>
-    </section>
-  </main>
+  <footer class="footer">
+    <p>Wine Quality Prediction System · Explorer</p>
+  </footer>
 
   <script src="js/script.js"></script>
 </body>

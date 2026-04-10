@@ -1,165 +1,61 @@
 <!DOCTYPE html>
-<html>
-<head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Results</title>
-    <link rel="stylesheet" href="css/style.css">
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-</head>
-<body>
-
-<body>
-
-<nav class="navbar">
-    <h2>🍷 WineAI</h2>
-    <div>
-        <a href="index.html">Home</a>
-        <a href="dataset.html">Dataset</a>
-        <a href="explorer.html">Explorer</a>
-        <a href="results.html">Results</a>
-        <a href="notebook.html">Notebook</a>
-    </div>
-</nav>
-
-<div class="content-wrap">
-  <h2 style="text-align:center">Model Insights</h2>
-  <div class="card"><canvas id="impactChart"></canvas></div>
-  <div class="card"><canvas id="distributionChart"></canvas></div>
-
-  <div class="card">
-    <h3>Model Insights</h3>
-    <ul>
-    <li>XGBoost and Random Forest give highest accuracy</li>
-    <li>Alcohol is the most influential feature</li>
-    <li>Feature selection improves prediction accuracy</li>
-    </ul>
-    <p>Most wines are average quality, showing class imbalance in quality distribution.</p>
-  </div>
-</div>
-
-<script>
-new Chart(document.getElementById('impactChart').getContext('2d'), {
-    type: 'bar',
-    data: {
-        labels: ['Alcohol', 'Acidity', 'Sulphates'],
-        datasets: [{ label: 'Impact on Quality', data: [9, -6, 5], backgroundColor: '#f87171' }]
-    }
-});
-
-new Chart(document.getElementById('distributionChart').getContext('2d'), {
-    type: 'bar',
-    data: {
-        labels: ['Low (3-4)', 'Average (5-6)', 'High (7-8)'],
-        datasets: [{ label: 'Quality Distribution', data: [22, 61, 17], backgroundColor: ['#ef4444', '#f59e0b', '#22c55e'] }]
-    }
-});
-</script>
-        <a href="explorer.html">Explorer</a>
-        <a href="results.html">Results</a>
-    </div>
-</nav>
-
-<h2 style="text-align:center">Model Insights</h2>
-<div class="results-wrap">
-  <canvas id="resultChart"></canvas>
-</div>
-
-<script>
-let ctx = document.getElementById('resultChart').getContext('2d');
-
-new Chart(ctx, {
-    type: 'bar',
-    data: {
-        labels: ['Alcohol', 'Acidity', 'Sulphates'],
-        datasets: [{
-            label: 'Impact on Quality',
-            data: [8, -5, 4],
-            backgroundColor: '#f87171'
-        }]
-    }
-});
-</script>
-
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Results | WineAI</title>
+  <title>Results | Wine Quality Prediction System</title>
   <link rel="stylesheet" href="css/style.css" />
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
   <nav class="navbar">
-    <h2>🍷 WineAI</h2>
+    <a href="index.html" class="brand">🍷 Wine Quality <span>Prediction System</span></a>
     <ul>
       <li><a href="index.html">Home</a></li>
       <li><a href="about.html">About</a></li>
+      <li><a href="methodology.html">Methodology</a></li>
       <li><a href="dataset.html">Dataset</a></li>
       <li><a href="results.html" class="active">Results</a></li>
-      <li><a href="explorer.html">Explorer</a></li>
       <li><a href="notebook.html">Notebook</a></li>
+      <li><a href="explorer.html">Explorer</a></li>
     </ul>
   </nav>
-
-  <main class="container grid-2">
-    <section class="card">
-      <h2>Feature Importance</h2>
-      <canvas id="resultsChart" height="180"></canvas>
-    </section>
-    <section class="card">
-      <h2>Correlation Heatmap (Conceptual)</h2>
-      <div class="heatmap-grid">
-        <div class="h1">1.00</div><div class="h2">-0.42</div><div class="h3">0.31</div>
-        <div class="h2">-0.42</div><div class="h1">1.00</div><div class="h2">-0.25</div>
-        <div class="h3">0.31</div><div class="h2">-0.25</div><div class="h1">1.00</div>
-      </div>
-    </section>
-    <section class="card">
-      <h2>Model Accuracy</h2>
-      <p>Logistic Regression: <strong>74%</strong></p>
-      <p>XGBoost: <strong>82%</strong></p>
-    </section>
-  </main>
-
-  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-  <title>Results | Wine Quality Intelligence Platform</title>
-  <link rel="stylesheet" href="css/style.css" />
-</head>
-<body>
-  <header class="site-header">
-    <h1>Results & Insights</h1>
-    <nav>
-      <a href="index.html">Home</a>
-      <a href="about.html">About</a>
-      <a href="methodology.html">Methodology</a>
-      <a href="dataset.html">Dataset</a>
-      <a href="results.html">Results</a>
-      <a href="explorer.html" class="cta">Launch Explorer</a>
-    </nav>
-  </header>
-
   <main class="container">
-    <section class="card">
-      <h2>Feature Importance (Conceptual)</h2>
-      <div class="bars">
-        <div><span>Alcohol</span><div class="bar" style="--w: 82%"></div></div>
-        <div><span>Volatile Acidity</span><div class="bar" style="--w: 76%"></div></div>
-        <div><span>Sulphates</span><div class="bar" style="--w: 61%"></div></div>
-        <div><span>pH</span><div class="bar" style="--w: 45%"></div></div>
-      </div>
+    <section class="card fade-in">
+      <h1>Key Findings &amp; Results</h1>
+      <p class="mt-2">Analysis of 6,497 wine samples reveals strong patterns between chemical composition and quality.</p>
     </section>
-
-    <section class="card">
-      <h2>Insights</h2>
-      <ul>
-        <li>Higher alcohol can positively influence quality bands.</li>
-        <li>Excess volatile acidity tends to reduce quality outcomes.</li>
-        <li>Sulphates may improve structure when in balanced ranges.</li>
-        <li>Feature interactions matter; no single metric defines quality alone.</li>
-      </ul>
+    <div class="grid-2 fade-in">
+      <article class="card">
+        <h3>Feature Importance</h3>
+        <div class="chart-wrap"><canvas id="importanceChart"></canvas></div>
+      </article>
+      <article class="card">
+        <h3>Correlation with Quality</h3>
+        <div class="chart-wrap"><canvas id="correlationChart"></canvas></div>
+      </article>
+    </div>
+    <div class="grid-3 mt-3 fade-in">
+      <article class="card">
+        <h3>🏆 Top Predictor</h3>
+        <p><strong>Alcohol</strong> has the highest positive correlation (r = +0.44) with quality. Higher alcohol wines consistently score better.</p>
+      </article>
+      <article class="card">
+        <h3>⚠️ Quality Killer</h3>
+        <p><strong>Volatile Acidity</strong> is a strong negative factor (r = −0.27). High levels produce vinegar-like off-flavors.</p>
+      </article>
+      <article class="card">
+        <h3>📈 Model Performance</h3>
+        <p>XGBoost achieves <strong>~72% accuracy</strong> on exact scores and <strong>90%+</strong> when classifying High (≥7) vs Standard quality.</p>
+      </article>
+    </div>
+    <section class="card mt-3 fade-in">
+      <h3>Quality Score Distribution</h3>
+      <p>Most wines cluster around scores 5–6. Premium wines (7–9) make up ~20% of the dataset.</p>
+      <div class="chart-wrap mt-2" style="height: 280px;"><canvas id="distributionChart"></canvas></div>
     </section>
   </main>
-
+  <footer class="footer"><p>Wine Quality Prediction System · Results</p></footer>
   <script src="js/script.js"></script>
 </body>
 </html>

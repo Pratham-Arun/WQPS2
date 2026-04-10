@@ -1,321 +1,354 @@
-let ctx = document.getElementById('chart');
-let chart;
+/* ═══════════════════════════════════════════════════════════════
+   Wine Quality Prediction System — script.js
+   ═══════════════════════════════════════════════════════════════ */
 
-if (ctx) {
-  chart = new Chart(ctx.getContext('2d'), {
-      type: 'bar',
-      data: {
-          labels: ['Alcohol', 'Acidity', 'Sulphates'],
-          datasets: [{
-              label: 'Wine Profile',
-              data: [10.5, 0.5, 0.6],
-              backgroundColor: '#f87171'
-          }]
-      }
-  });
+/* ─── Chart.js Global Config ─── */
+if (typeof Chart !== 'undefined') {
+  Chart.defaults.color = '#9ca3af';
+  Chart.defaults.font.family = "'Poppins', sans-serif";
+  Chart.defaults.plugins.legend.labels.usePointStyle = true;
 }
 
-function update() {
-    let alcohol = parseFloat(document.getElementById("alcohol").value);
-    let va = parseFloat(document.getElementById("va").value);
-    let sulphates = parseFloat(document.getElementById("sulphates").value);
-    let chlorides = parseFloat(document.getElementById("chlorides").value);
-    let citric = parseFloat(document.getElementById("citric").value);
-    let ph = parseFloat(document.getElementById("ph").value);
-
-    if (chart) {
-      chart.data.datasets[0].data = [alcohol, va, sulphates];
-      chart.update();
-    }
-
-    let score = 0;
-
-    score += (alcohol - 10) * 1.5;
-    score -= (va * 2);
-    score += (sulphates * 1.2);
-    score -= (chlorides * 5);
-    score += (citric * 0.5);
-
-    let qualityScore = Math.max(3, Math.min(8, 5 + score / 3));
-
-    let result = "";
-    if (qualityScore >= 7) {
-        result = "High Quality Wine 🍷";
-    } else if (qualityScore >= 5) {
-        result = "Medium Quality Wine 🍇";
-    } else {
-        result = "Low Quality Wine ⚠️";
-    }
-
-    let insights = "";
-    if(alcohol > 11){
-        insights += "✔ Alcohol strongly improves wine quality<br>";
-    }
-    if(va > 0.8){
-        insights += "⚠ High volatile acidity damages wine quality<br>";
-    }
-    if(sulphates > 0.6){
-        insights += "✔ Sulphates improve stability and quality<br>";
-    }
-    if(ph > 3.8 || ph < 3.1){
-        insights += "⚠ pH and acidity balance can affect taste and stability<br>";
-    }
-
-    document.getElementById("result").innerHTML = `
-      <h3>${result}</h3>
-      <p>Estimated Score: ${qualityScore.toFixed(1)} / 10</p>
-      <h4>Insights</h4>
-      <p>${insights || 'Balanced profile with moderate predicted quality.'}</p>
-    `;
-}
-
-if (document.getElementById("chart")) {
-  update();
-}
-let ctx = document.getElementById('chart').getContext('2d');
-
-let chart = new Chart(ctx, {
-    type: 'bar',
-    data: {
-        labels: ['Alcohol', 'Acidity', 'Sulphates'],
-        datasets: [{
-            label: 'Wine Profile',
-            data: [10, 0.5, 0.6],
-            backgroundColor: '#f87171'
-        }]
-    }
-});
-
-function update() {
-
-    let alcohol = parseFloat(document.getElementById("alcohol").value);
-    let va = parseFloat(document.getElementById("va").value);
-    let sulphates = parseFloat(document.getElementById("sulphates").value);
-
-    chart.data.datasets[0].data = [alcohol, va, sulphates];
-    chart.update();
-
-    let score = 0;
-
-    if (alcohol > 11) score += 2;
-    if (sulphates > 0.6) score += 1;
-    if (va > 0.8) score -= 2;
-
-    let result = "";
-
-    if (score >= 2) {
-        result = "🍷 High Quality";
-    } else if (score >= 0) {
-        result = "🍇 Medium Quality";
-    } else {
-        result = "⚠️ Low Quality";
-    }
-
-    document.getElementById("result").innerHTML = result;
-}
-
-update();
-let wineChart;
-
-function bindSliderValue(id, decimals = 2) {
+/* ─── Slider → Value Binding ─── */
+function bindSlider(id, spanId, decimals) {
   const slider = document.getElementById(id);
-  const output = document.getElementById(`${id}Value`);
-  if (!slider || !output) return;
+  const span = document.getElementById(spanId);
+  if (!slider || !span) return;
 
-  const render = () => {
-    output.textContent = Number(slider.value).toFixed(decimals);
+  const update = () => {
+    span.textContent = Number(slider.value).toFixed(decimals);
+    updateExplorerChart();
   };
 
-  slider.addEventListener("input", () => {
-    render();
-    updateChartFromInputs();
-  });
-
-  render();
+  slider.addEventListener('input', update);
+  update();
 }
 
-function initExplorerChart() {
-  const canvas = document.getElementById("chart");
-  if (!canvas || typeof Chart === "undefined") return;
-  const ctx = canvas.getContext("2d");
+/* ─── Wine Type Selection ─── */
+function setWineType(type) {
+  document.getElementById('wineType').value = type;
+  
+  // Toggle button classes
+  document.getElementById('typeRed').classList.toggle('active', type === 'red');
+  document.getElementById('typeWhite').classList.toggle('active', type === 'white');
+  
+  predictWine();
+}
 
-  wineChart = new Chart(ctx, {
-    type: "bar",
+/* ─── Reset to Good Profile ─── */
+function resetToGoodQuality() {
+  const goodProfile = {
+    alcohol: 12.5,
+    va: 0.35,
+    sulphates: 0.75,
+    citric: 0.45,
+    ph: 3.25,
+    fixedAcidity: 8.5,
+    sugar: 2.0,
+    chlorides: 0.05,
+    freeSO2: 30,
+    totalSO2: 120,
+    density: 0.994
+  };
+
+  for (const [id, val] of Object.entries(goodProfile)) {
+    const slider = document.getElementById(id);
+    if (slider) {
+      slider.value = val;
+      // Trigger update manually for each
+      const spanId = id + 'Val';
+      const span = document.getElementById(spanId);
+      if (span) {
+          // Some IDs have different span mapping in HTML (va -> vaVal, citric -> citricVal)
+          // Actually I standardized them mostly. Let's check.
+          span.textContent = val.toFixed(slider.step.includes('.') ? slider.step.split('.')[1].length : 0);
+      }
+    }
+  }
+  
+  // Custom fix for span decimals based on standard usage
+  document.getElementById('vaVal').textContent = "0.35";
+  document.getElementById('phVal').textContent = "3.25";
+  document.getElementById('chloridesVal').textContent = "0.050";
+  document.getElementById('densityVal').textContent = "0.9940";
+  
+  predictWine();
+}
+
+/* ═══════════════════════════════════════
+   EXPLORER — Radar Chart
+   ═══════════════════════════════════════ */
+let explorerChart = null;
+
+function initExplorerChart() {
+  const canvas = document.getElementById('explorerChart');
+  if (!canvas || typeof Chart === 'undefined') return;
+
+  explorerChart = new Chart(canvas.getContext('2d'), {
+    type: 'radar',
     data: {
-      labels: ["Alcohol", "Acidity", "Sulphates"],
+      labels: [
+        'Alcohol', 'Vol. Acidity', 'Sulphates', 'Citric Acid',
+        'pH', 'Fixed Acid.', 'Sugar', 'Chlorides',
+        'Free SO₂', 'Total SO₂', 'Density'
+      ],
       datasets: [{
-        label: "Wine Profile",
-        data: [10.5, 0.7, 0.6],
-        backgroundColor: "#f87171"
+        label: 'Wine Profile',
+        data: [10.5, 0.5, 0.65, 0.3, 3.3, 7.4, 2.5, 0.08, 15, 46, 0.996],
+        backgroundColor: 'rgba(248, 113, 113, 0.12)',
+        borderColor: '#f87171',
+        borderWidth: 2,
+        pointBackgroundColor: '#f87171',
+        pointRadius: 4
       }]
     },
     options: {
       responsive: true,
-      plugins: { legend: { labels: { color: "#f9fafb" } } },
+      maintainAspectRatio: false,
       scales: {
-        x: { ticks: { color: "#f9fafb" }, grid: { color: "rgba(255,255,255,0.12)" } },
-        y: { ticks: { color: "#f9fafb" }, grid: { color: "rgba(255,255,255,0.12)" } }
-      }
+        r: {
+          beginAtZero: true,
+          grid: { color: 'rgba(255,255,255,0.06)' },
+          angleLines: { color: 'rgba(255,255,255,0.06)' },
+          pointLabels: { color: '#d1d5db', font: { size: 10 } },
+          ticks: { display: false }
+        }
+      },
+      plugins: { legend: { display: false } }
     }
   });
 }
 
-function initResultsChart() {
-  const canvas = document.getElementById("resultsChart");
-  if (!canvas || typeof Chart === "undefined") return;
-  const ctx = canvas.getContext("2d");
-  new Chart(ctx, {
-    type: "bar",
-    data: {
-      labels: ["Alcohol", "Volatile Acidity", "Sulphates", "Citric Acid"],
-      datasets: [{
-        label: "Relative Importance",
-        data: [0.84, 0.78, 0.63, 0.57],
-        backgroundColor: ["#f87171", "#fb7185", "#ef4444", "#f97316"]
-      }]
-    },
-    options: {
-      plugins: { legend: { labels: { color: "#f9fafb" } } },
-      scales: {
-        x: { ticks: { color: "#f9fafb" }, grid: { color: "rgba(255,255,255,0.12)" } },
-        y: { ticks: { color: "#f9fafb" }, grid: { color: "rgba(255,255,255,0.12)" } }
-      }
-    }
-  });
+function updateExplorerChart() {
+  if (!explorerChart) return;
+
+  // Normalize all values to roughly 0-10 range for radar display
+  const v = (id, fallback) => parseFloat(document.getElementById(id)?.value || fallback);
+
+  explorerChart.data.datasets[0].data = [
+    v('alcohol', 10.5),
+    v('va', 0.5) * 10,           // scale 0-2 → 0-20
+    v('sulphates', 0.65) * 10,   // scale 0-2 → 0-20
+    v('citric', 0.3) * 10,       // scale 0-1 → 0-10
+    v('ph', 3.3),
+    v('fixedAcidity', 7.4),
+    v('sugar', 2.5),
+    v('chlorides', 0.08) * 100,  // scale 0-0.2 → 0-20
+    v('freeSO2', 15) / 5,        // scale 1-72 → 0-14
+    v('totalSO2', 46) / 20,      // scale 6-289 → 0-14
+    v('density', 0.996) * 100 - 99 // scale 0.99-1.00 → 0-10
+  ];
+  explorerChart.update('none');
 }
 
-function updateChart(alcohol, va, sulphates) {
-  if (!wineChart) return;
-  wineChart.data.datasets[0].data = [alcohol, va, sulphates];
-  wineChart.update();
-}
+/* ═══════════════════════════════════════
+   EXPLORER — Prediction Logic (11 params)
+   ═══════════════════════════════════════ */
+function predictWine() {
+  const v = id => parseFloat(document.getElementById(id).value);
 
-function updateChartFromInputs() {
-  const alcohol = parseFloat(document.getElementById("alcohol")?.value || "0");
-  const va = parseFloat(document.getElementById("va")?.value || "0");
-  const sulphates = parseFloat(document.getElementById("sulphates")?.value || "0");
-  updateChart(alcohol, va, sulphates);
-}
+  const alcohol      = v('alcohol');
+  const va           = v('va');
+  const sulphates    = v('sulphates');
+  const citric       = v('citric');
+  const ph           = v('ph');
+  const fixedAcidity = v('fixedAcidity');
+  const sugar        = v('sugar');
+  const chlorides    = v('chlorides');
+  const freeSO2      = v('freeSO2');
+  const totalSO2     = v('totalSO2');
+  const density      = v('density');
+  const wineType     = document.getElementById('wineType').value;
 
-function showResult(score) {
-  const output = document.getElementById("output");
-  if (!output) return;
+  // Research-based scoring using all features
+  let score = 0;
 
-  if (score > 7) {
-    output.innerHTML = "🍷 High Quality";
-    output.style.color = "lightgreen";
-  } else if (score >= 5) {
-    output.innerHTML = "🍇 Medium Quality";
-    output.style.color = "#fde68a";
+  // Type-specific adjustments
+  if (wineType === 'white') {
+    // White wines often have higher SO2
+    if (totalSO2 > 100 && totalSO2 < 200) score += 0.3;
+    if (va < 0.3) score += 0.2;
   } else {
-    output.innerHTML = "⚠️ Low Quality";
-    output.style.color = "#f87171";
+    // Red wines
+    if (va < 0.5) score += 0.2;
+    if (sulphates > 0.6) score += 0.2;
+  }
+
+  // Strong positive: alcohol
+  score += (alcohol - 10) * 1.5;
+
+  // Positive: sulphates, citric acid
+  score += sulphates * 1.2;
+  score += citric * 0.5;
+
+  // Negative: volatile acidity (strongest negative)
+  score -= va * 2;
+
+  // Moderate negative: pH
+  score -= (ph - 3.3) * 0.8;
+
+  // Fixed acidity sweet spot (6-9)
+  if (fixedAcidity >= 6 && fixedAcidity <= 9) score += 0.3;
+
+  // High sugar penalty
+  if (sugar > 8) score -= 0.5;
+
+  // High chlorides penalty
+  if (chlorides > 0.1) score -= 0.5;
+
+  // Free SO2 — moderate levels are good
+  if (freeSO2 >= 10 && freeSO2 <= 40) score += 0.3;
+
+  // Very high total SO2 penalty
+  if (totalSO2 > 150) score -= 0.5;
+
+  // Density — lower = more alcohol = better
+  score -= (density - 0.995) * 50;
+
+  const quality = Math.max(0, Math.min(10, 5.5 + score / 3));
+
+  // Tier
+  let tier, emoji, color;
+  if (quality >= 7) {
+    tier = 'High Quality'; emoji = '🍷'; color = '#4ade80';
+  } else if (quality >= 5) {
+    tier = 'Medium Quality'; emoji = '🍇'; color = '#fde68a';
+  } else {
+    tier = 'Low Quality'; emoji = '⚠️'; color = '#f87171';
+  }
+
+  // Insights
+  let insights = '';
+  if (alcohol > 11)    insights += '✔ High alcohol strongly boosts quality potential.<br>';
+  if (alcohol <= 9.5)  insights += '⚠ Low alcohol often correlates with lower scores.<br>';
+  if (va > 0.8)        insights += '⚠ Elevated volatile acidity → vinegar-like off-flavors.<br>';
+  if (va < 0.35)       insights += '✔ Low volatile acidity — clean, pleasant aroma.<br>';
+  if (sulphates > 0.7) insights += '✔ Sulphates at favorable levels — good preservation.<br>';
+  if (citric > 0.4)    insights += '✔ Good citric acid level — adds freshness.<br>';
+  if (ph > 3.6)        insights += '⚠ High pH may reduce stability and shelf life.<br>';
+  if (ph < 3.0)        insights += '⚠ Very low pH — may taste overly sharp.<br>';
+  if (chlorides > 0.1) insights += '⚠ Elevated chlorides can add unwanted saltiness.<br>';
+  if (sugar > 8)       insights += '⚠ High residual sugar — may indicate stuck fermentation.<br>';
+  if (totalSO2 > 150)  insights += '⚠ Very high total SO₂ — can cause off-flavors.<br>';
+  if (density < 0.993) insights += '✔ Low density indicates higher alcohol extraction.<br>';
+  if (freeSO2 >= 10 && freeSO2 <= 40) insights += '✔ Free SO₂ in protective range.<br>';
+  if (!insights)       insights = '• Chemical profile is balanced with moderate predicted quality.';
+
+  // Render
+  document.getElementById('result').innerHTML = `
+    <h2 style="color:${color}; margin-bottom: 0.5rem;">${emoji} ${tier}</h2>
+    <p style="color: #d1d5db; font-size: 1.1rem;">Estimated Score: <strong>${quality.toFixed(2)}</strong> / 10.0</p>
+  `;
+
+  document.getElementById('insights').innerHTML = `
+    <h3 style="margin-top: 1rem;">Research Insights</h3>
+    <p style="margin-top: 0.5rem; line-height: 2;">${insights}</p>
+  `;
+
+  updateExplorerChart();
+}
+
+/* ═══════════════════════════════════════
+   RESULTS PAGE — Charts
+   ═══════════════════════════════════════ */
+function initResultsCharts() {
+  const impCanvas = document.getElementById('importanceChart');
+  if (impCanvas && typeof Chart !== 'undefined') {
+    new Chart(impCanvas.getContext('2d'), {
+      type: 'bar',
+      data: {
+        labels: ['Alcohol', 'Density', 'Vol. Acidity', 'Chlorides', 'Citric Acid', 'Sulphates', 'pH', 'Fixed Acid.', 'Total SO₂', 'Free SO₂', 'Sugar'],
+        datasets: [{
+          label: 'Relative Importance',
+          data: [0.84, 0.72, 0.68, 0.55, 0.52, 0.50, 0.42, 0.38, 0.35, 0.30, 0.22],
+          backgroundColor: ['#f87171','#fb923c','#fbbf24','#a3e635','#4ade80','#2dd4bf','#38bdf8','#818cf8','#c084fc','#e879f9','#f472b6'],
+          borderRadius: 6
+        }]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        indexAxis: 'y',
+        plugins: { legend: { display: false } },
+        scales: {
+          x: { grid: { color: 'rgba(255,255,255,0.06)' }, max: 1.0 },
+          y: { grid: { display: false } }
+        }
+      }
+    });
+  }
+
+  const corrCanvas = document.getElementById('correlationChart');
+  if (corrCanvas && typeof Chart !== 'undefined') {
+    new Chart(corrCanvas.getContext('2d'), {
+      type: 'bar',
+      data: {
+        labels: ['Alcohol', 'Sulphates', 'Citric Acid', 'Fixed Acid.', 'Free SO₂', 'Sugar', 'pH', 'Chlorides', 'Total SO₂', 'Vol. Acidity', 'Density'],
+        datasets: [{
+          label: 'Correlation (r)',
+          data: [0.44, 0.04, 0.09, 0.07, 0.06, -0.04, -0.06, -0.20, -0.17, -0.27, -0.31],
+          backgroundColor: function(ctx) {
+            return ctx.raw >= 0 ? '#4ade80' : '#f87171';
+          },
+          borderRadius: 4
+        }]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: { legend: { display: false } },
+        scales: {
+          x: { grid: { display: false } },
+          y: { grid: { color: 'rgba(255,255,255,0.06)' }, min: -0.4, max: 0.5 }
+        }
+      }
+    });
+  }
+
+  const distCanvas = document.getElementById('distributionChart');
+  if (distCanvas && typeof Chart !== 'undefined') {
+    new Chart(distCanvas.getContext('2d'), {
+      type: 'bar',
+      data: {
+        labels: ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '10'],
+        datasets: [{
+          label: 'Number of Wines',
+          data: [0, 0, 0, 30, 216, 2138, 2836, 1079, 193, 5, 0],
+          backgroundColor: ['#ef4444','#f97316','#eab308','#84cc16','#22c55e','#14b8a6','#06b6d4'],
+          borderRadius: 6
+        }]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: { legend: { display: false } },
+        scales: {
+          x: { grid: { display: false }, title: { display: true, text: 'Quality Score', color: '#9ca3af' } },
+          y: { grid: { color: 'rgba(255,255,255,0.06)' }, title: { display: true, text: 'Count', color: '#9ca3af' } }
+        }
+      }
+    });
   }
 }
 
-function predictWine() {
-  const alcohol = parseFloat(document.getElementById("alcohol").value);
-  const va = parseFloat(document.getElementById("va").value);
-  const sulphates = parseFloat(document.getElementById("sulphates").value);
-  const citric = parseFloat(document.getElementById("citric").value);
-  const ph = parseFloat(document.getElementById("ph").value);
-  const sugar = parseFloat(document.getElementById("sugar").value);
-  const fixedAcidity = parseFloat(document.getElementById("fixed_acidity").value);
-  const chlorides = parseFloat(document.getElementById("chlorides").value);
+/* ═══════════════════════════════════════
+   INIT
+   ═══════════════════════════════════════ */
+document.addEventListener('DOMContentLoaded', () => {
+  // Explorer sliders (all 11)
+  bindSlider('fixedAcidity', 'fixedAcidityVal', 1);
+  bindSlider('va', 'vaVal', 2);
+  bindSlider('citric', 'citricVal', 2);
+  bindSlider('sugar', 'sugarVal', 1);
+  bindSlider('chlorides', 'chloridesVal', 3);
+  bindSlider('freeSO2', 'freeSO2Val', 0);
+  bindSlider('totalSO2', 'totalSO2Val', 0);
+  bindSlider('density', 'densityVal', 4);
+  bindSlider('ph', 'phVal', 2);
+  bindSlider('sulphates', 'sulphatesVal', 2);
+  bindSlider('alcohol', 'alcoholVal', 1);
 
-  let score = 0;
-  if (alcohol > 11) score += 2;
-  if (sulphates > 0.6) score += 1;
-  if (citric > 0.3) score += 1;
-  if (va > 0.8) score -= 2;
-  if (ph > 3.8) score -= 1;
-  if (sugar > 10) score -= 1;
-  if (fixedAcidity >= 6 && fixedAcidity <= 9) score += 1;
-  if (chlorides > 0.12) score -= 1;
-
-  const qualityScore = Math.max(3, Math.min(9, 5 + score));
-  const insights = document.getElementById("insights");
-  const loader = document.getElementById("loader");
-
-  if (loader) loader.style.display = "block";
-
-  setTimeout(() => {
-    if (loader) loader.style.display = "none";
-    showResult(qualityScore);
-    updateChart(alcohol, va, sulphates);
-
-    if (insights) {
-      let text = `Estimated Quality Score: ${qualityScore}<br>`;
-      if (alcohol > 11) text += "• Alcohol boosts quality potential.<br>";
-      if (va > 0.8) text += "• Volatile acidity is hurting the score.<br>";
-      if (sugar > 10) text += "• Residual sugar is above ideal range.<br>";
-      if (ph > 3.8) text += "• High pH may reduce stability.<br>";
-      insights.innerHTML = text;
-    }
-  }, 500);
-}
-
-document.addEventListener("DOMContentLoaded", () => {
-  bindSliderValue("fixed_acidity", 1);
-  bindSliderValue("va", 2);
-  bindSliderValue("citric", 2);
-  bindSliderValue("sugar", 1);
-  bindSliderValue("chlorides", 2);
-  bindSliderValue("ph", 2);
-  bindSliderValue("sulphates", 2);
-  bindSliderValue("alcohol", 1);
+  // Charts
   initExplorerChart();
-  initResultsChart();
-  updateChartFromInputs();
-  slider.addEventListener("input", render);
-  render();
-}
-
-function predictWine() {
-  const alcoholEl = document.getElementById("alcohol");
-  const vaEl = document.getElementById("va");
-  const sulphatesEl = document.getElementById("sulphates");
-  const resultEl = document.getElementById("result");
-  const insightsEl = document.getElementById("insights");
-
-  if (!alcoholEl || !vaEl || !sulphatesEl || !resultEl || !insightsEl) return;
-
-  const alcohol = parseFloat(alcoholEl.value);
-  const va = parseFloat(vaEl.value);
-  const sulphates = parseFloat(sulphatesEl.value);
-
-  let score = 0;
-
-  if (alcohol > 11) score += 2;
-  if (sulphates > 0.6) score += 1;
-  if (va > 0.8) score -= 2;
-
-  let result = "";
-  const confidence = 70 + Math.random() * 20;
-
-  if (score >= 2) {
-    result = "High Quality Wine 🍷";
-    document.body.style.background = "#052e16";
-  } else if (score >= 0) {
-    result = "Medium Quality Wine 🍇";
-    document.body.style.background = "#0b0f1a";
-  } else {
-    result = "Low Quality Wine ⚠️";
-    document.body.style.background = "#450a0a";
-  }
-
-  let insights = "";
-  if (alcohol > 11) insights += "• High alcohol improves quality potential.<br>";
-  if (sulphates > 0.6) insights += "• Sulphates are in a favorable range.<br>";
-  if (va > 0.8) insights += "• Elevated volatile acidity can reduce quality.<br>";
-  if (!insights) insights = "• Values are balanced but not strongly predictive.";
-
-  resultEl.innerHTML = `<h3>${result}</h3><p>Confidence: ${confidence.toFixed(2)}%</p>`;
-  insightsEl.innerHTML = `<h4>Insights</h4><p>${insights}</p>`;
-}
-
-document.addEventListener("DOMContentLoaded", () => {
-  bindSliderValue("alcohol", 1);
-  bindSliderValue("va", 2);
-  bindSliderValue("sulphates", 2);
+  initResultsCharts();
 });

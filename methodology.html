@@ -3,83 +3,54 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Methodology | WineAI</title>
+  <title>Methodology | Wine Quality Prediction System</title>
   <link rel="stylesheet" href="css/style.css" />
 </head>
 <body>
   <nav class="navbar">
-    <h2>🍷 WineAI</h2>
+    <a href="index.html" class="brand">🍷 Wine Quality <span>Prediction System</span></a>
     <ul>
       <li><a href="index.html">Home</a></li>
       <li><a href="about.html">About</a></li>
+      <li><a href="methodology.html" class="active">Methodology</a></li>
       <li><a href="dataset.html">Dataset</a></li>
       <li><a href="results.html">Results</a></li>
-      <li><a href="explorer.html">Explorer</a></li>
       <li><a href="notebook.html">Notebook</a></li>
+      <li><a href="explorer.html">Explorer</a></li>
     </ul>
   </nav>
-
-  <main class="container grid-2">
-    <section class="card">
-      <h2>Data Preprocessing</h2>
-      <p>Clean missing values, normalize feature ranges, and evaluate class balance.</p>
-    </section>
-    <section class="card">
-      <h2>Feature Selection</h2>
-      <p>Select high-signal features including alcohol, volatile acidity, sulphates, and pH.</p>
-    </section>
-    <section class="card">
-      <h2>Modeling</h2>
-      <p>Compare Logistic Regression baseline against XGBoost for non-linear performance gains.</p>
-    </section>
-    <section class="card">
-      <h2>Evaluation</h2>
-      <p>Use accuracy, precision, recall, F1-score, and confusion matrix to assess reliability.</p>
-    </section>
-  </main>
-  <title>Methodology | Wine Quality Intelligence Platform</title>
-  <link rel="stylesheet" href="css/style.css" />
-</head>
-<body>
-  <header class="site-header">
-    <h1>Methodology</h1>
-    <nav>
-      <a href="index.html">Home</a>
-      <a href="about.html">About</a>
-      <a href="methodology.html">Methodology</a>
-      <a href="dataset.html">Dataset</a>
-      <a href="results.html">Results</a>
-      <a href="explorer.html" class="cta">Launch Explorer</a>
-    </nav>
-  </header>
-
   <main class="container">
-    <section class="card">
-      <h2>Dataset Overview</h2>
-      <p>
-        Typical wine quality datasets contain physicochemical measurements and a quality score.
-        These measurements are used as model features to estimate likely quality outcomes.
-      </p>
+    <section class="card fade-in">
+      <h1>Research Methodology</h1>
+      <p class="mt-2">Our approach combines exploratory data analysis with gradient-boosted tree models to identify the chemical signatures of high-quality wine.</p>
     </section>
-
-    <section class="card">
-      <h2>Feature Engineering & Model Concepts</h2>
-      <p>
-        Features such as alcohol, volatile acidity, sulphates, and pH are normalized and analyzed.
-        In production systems, models like logistic regression, random forests, or gradient boosting
-        may be applied to capture complex relationships.
-      </p>
-    </section>
-
-    <section class="card">
-      <h2>Evaluation Metrics</h2>
-      <p>
-        Model performance is commonly evaluated using accuracy, precision, recall, F1-score,
-        and confusion matrices. For regression-style quality estimation, MAE and RMSE can also be used.
-      </p>
-    </section>
+    <div class="pipeline fade-in">
+      <div class="pipeline-step"><span class="step-num">1</span><h4>Data Collection</h4><p>6,497 wine samples from UCI ML Repository</p></div>
+      <div class="pipeline-step"><span class="step-num">2</span><h4>Preprocessing</h4><p>Handle outliers, scale features, check distributions</p></div>
+      <div class="pipeline-step"><span class="step-num">3</span><h4>Feature Selection</h4><p>Correlation analysis identifies top predictors</p></div>
+      <div class="pipeline-step"><span class="step-num">4</span><h4>Model Training</h4><p>Logistic Regression + XGBoost classifiers</p></div>
+      <div class="pipeline-step"><span class="step-num">5</span><h4>Evaluation</h4><p>Accuracy, precision, recall, confusion matrix</p></div>
+    </div>
+    <div class="grid-2 mt-4 fade-in">
+      <article class="card">
+        <h3>📋 Feature Selection</h3>
+        <p>Correlation analysis reveals <strong>alcohol</strong> (r = +0.44), <strong>density</strong> (r = −0.31), and <strong>volatile acidity</strong> (r = −0.27) are the strongest predictors.</p>
+      </article>
+      <article class="card">
+        <h3>🧪 Models Used</h3>
+        <p><strong>Logistic Regression</strong> provides a linear baseline. <strong>XGBoost</strong> captures non-linear interactions, achieving higher accuracy on multi-class quality prediction.</p>
+      </article>
+      <article class="card">
+        <h3>📐 Evaluation Metrics</h3>
+        <p><strong>Accuracy:</strong> Overall correctness.<br><strong>Precision:</strong> Of predicted "high quality", how many truly are.<br><strong>Recall:</strong> Of all "high quality" wines, how many were identified.</p>
+      </article>
+      <article class="card">
+        <h3>⚙️ Simulation Engine</h3>
+        <p>The Explorer uses a <strong>rule-based scoring engine</strong> derived from the trained model's feature importances to provide transparent, explainable predictions.</p>
+      </article>
+    </div>
   </main>
-
+  <footer class="footer"><p>Wine Quality Prediction System · Methodology</p></footer>
   <script src="js/script.js"></script>
 </body>
 </html>
